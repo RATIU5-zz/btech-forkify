@@ -19,7 +19,8 @@
   "homepage": "https://github.com/RATIU5/btech-forkify#readme",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.0.0-beta.3.1",
-    "parcel": "^2.0.0-beta.3.1"
+    "parcel": "^2.0.0-beta.3.1",
+    "sass": "^1.35.1"
   },
   "dependencies": {
     "core-js": "^3.15.1",
