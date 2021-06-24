@@ -7,6 +7,7 @@ class PaginationView extends View {
 
     addHandlerClick(handler) {
         this._parentElement?.addEventListener("click", e => {
+            // @ts-ignore
             const btn = e.target?.closest(".btn--inline");
             if (!btn) return;
             handler(+btn.dataset.goto);

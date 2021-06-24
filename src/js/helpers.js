@@ -29,34 +29,3 @@ export const ajax = async function (url, uploadData = undefined) {
         throw err;
     }
 };
-
-// const getJSON = async function (url) {
-//     try {
-//         const res = await Promise.race([fetch(url), timeout(TIMEOUT_SEC)]);
-//         const data = await res.json();
-//         if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-//         return data;
-//     } catch (err) {
-//         throw err;
-//     }
-// };
-
-// const sendJSON = async function (uploadData, url) {
-//     try {
-//         const res = await Promise.race([
-//             fetch(url, {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify(uploadData),
-//             }),
-//             timeout(TIMEOUT_SEC),
-//         ]);
-//         const data = await res.json();
-//         if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-//         return data;
-//     } catch (err) {
-//         throw err;
-//     }
-// };
