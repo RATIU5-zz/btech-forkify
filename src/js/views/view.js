@@ -7,14 +7,22 @@ export default class View {
     _errorMessage;
     _successMessage;
 
-    render(data) {
-        this._updateData(data);
+    render(data, render = true) {
+        if (!data || (Array.isArray(data) && data.length === 0)) {
+            return this.renderError();
+        }
+        this._data = data;
+
         const markup = this._generateMarkup();
+
+        if (!render) return markup;
+
         this._clearParent();
         this._parentElement?.insertAdjacentHTML("afterbegin", markup);
     }
 
     update(data) {
+        // this._updateData(data);
         this._data = data;
         const newMarkup = this._generateMarkup();
 
@@ -49,12 +57,6 @@ export default class View {
         this._parentElement.innerHTML = "";
     }
 
-    _updateData(data) {
-        if (!data || (Array.isArray(data) && data.length === 0))
-            return this.renderError();
-        this._data = data;
-    }
-
     renderSpinner() {
         const markup = `
 		<div class="spinner">
@@ -80,6 +82,7 @@ export default class View {
 		`;
         this._clearParent();
         this._parentElement?.insertAdjacentHTML("afterbegin", markup);
+        // console.log("Error", message, this._parentElement);
     }
 
     renderMessage(message = this._successMessage) {
