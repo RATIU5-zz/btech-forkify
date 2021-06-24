@@ -8,17 +8,51 @@ export default class View {
     _successMessage;
 
     render(data) {
-        if (!data || (Array.isArray(data) && data.length === 0))
-            return this.renderError();
-        this._data = data;
+        this._updateData(data);
         const markup = this._generateMarkup();
         this._clearParent();
         this._parentElement?.insertAdjacentHTML("afterbegin", markup);
     }
 
+    update(data) {
+        this._data = data;
+        const newMarkup = this._generateMarkup();
+
+        const newDOM = document
+            .createRange()
+            // @ts-ignore
+            .createContextualFragment(newMarkup);
+        // New virtual DOM
+        const newElements = Array.from(newDOM.querySelectorAll("*"));
+        const curElements = Array.from(
+            this._parentElement.querySelectorAll("*")
+        );
+
+        newElements.forEach((newEl, i) => {
+            const curEl = curElements[i];
+
+            if (!newEl.isEqualNode(curEl)) {
+                // Update elements that contain text directly
+                if (newEl.firstChild?.nodeValue?.trim() !== "")
+                    curEl.textContent = newEl.textContent;
+
+                // Update attributes for elements that have changed attributes
+                Array.from(newEl.attributes).forEach(attr =>
+                    curEl.setAttribute(attr.name, attr.value)
+                );
+            }
+        });
+    }
+
     _clearParent() {
         // @ts-ignore
         this._parentElement.innerHTML = "";
+    }
+
+    _updateData(data) {
+        if (!data || (Array.isArray(data) && data.length === 0))
+            return this.renderError();
+        this._data = data;
     }
 
     renderSpinner() {
