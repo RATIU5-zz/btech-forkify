@@ -7,6 +7,14 @@ export default class View {
     _errorMessage;
     _successMessage;
 
+    /**
+     * Render the recieved object to the DOM
+     * @param {Object | Object[]} data The data to be rendered
+     * @param {boolean} [render=true] If false, return markup string otherwise render to DOM
+     * @returns {undefined | string} Returns a markup string if render=false
+     * @this {Object} View object
+     * @todo Finish implementation
+     */
     render(data, render = true) {
         if (!data || (Array.isArray(data) && data.length === 0)) {
             return this.renderError();
